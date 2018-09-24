@@ -38,7 +38,7 @@ UPDATE countries_new SET region_id = 1
 WHERE region_id is null;
 
 UPDATE countries_new
-SET population = population / 0.9
+SET population = population * 1.1
 RETURNING country_name, population AS "New Population";
 
 DELETE FROM countries
@@ -49,7 +49,7 @@ WHERE country_id = countries.id;
 
 DELETE FROM countries_new
 AS cnew USING countries AS co
-WHERE cnew.country_id=co.country_id
+WHERE cnew.country_id = co.country_id
 RETURNING *;
 
 DELETE FROM countries
