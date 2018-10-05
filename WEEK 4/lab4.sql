@@ -40,8 +40,7 @@ INSERT INTO orders VALUES
 
  SELECT * FROM orders WHERE customer_id IN (SELECT customer_id FROM customers WHERE city = 'New York');
 
- SELECT * FROM customers WHERE customer_id IN (SELECT customer_id FROM orders
- 											  WHERE purch_amt > 10);
+ SELECT * FROM customers WHERE customer_id IN (SELECT customer_id FROM orders WHERE purch_amt > 10);
 
  SELECT sum(purch_amt) FROM orders;
 
