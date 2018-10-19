@@ -8,55 +8,53 @@ create table Movie(mID int, title text, year int, director text);
 create table Reviewer(rID int, name text);
 create table Rating(rID int, mID int, stars int, ratingDate date);
 ALTER TABLE Movie
-    ADD PRIMARY KEY (mID);--1
+    ADD PRIMARY KEY (mID);
 
 ALTER TABLE Movie
-    ADD UNIQUE (title,year);--2
+    ADD UNIQUE (title,year);
 ALTER TABLE Reviewer
-    ADD PRIMARY KEY(rID);--3
+    ADD PRIMARY KEY(rID);
 ALTER TABLE Rating
-    ADD UNIQUE (rID,MID,ratingDate);--4
+    ADD UNIQUE (rID,MID,ratingDate);
 ALTER TABLE Reviewer
-    ADD CONSTRAINT check_name CHECK (name IS NOT NULL);--5
+    ADD CONSTRAINT check_name CHECK (name IS NOT NULL);
 ALTER TABLE Rating
-    ADD CONSTRAINT check_stars CHECK (stars IS NOT NULL);--6
+    ADD CONSTRAINT check_stars CHECK (stars IS NOT NULL);
 ALTER TABLE Movie
-    ADD CONSTRAINT year_after CHECK(year>1900);--7
+    ADD CONSTRAINT year_after CHECK(year>1900);
 ALTER TABLE Rating
-    ADD CONSTRAINT stars_in CHECK(stars IN (1,2,3,4,5));--8
+    ADD CONSTRAINT stars_in CHECK(stars IN (1,2,3,4,5));
 ALTER TABLE Rating
-    ADD CONSTRAINT date_after CHECK(EXTRACT(YEAR FROM ratingDate)>2000);--9
+    ADD CONSTRAINT date_after CHECK(EXTRACT(YEAR FROM ratingDate)>2000);
 
 SELECT * from pg_constraint;
 
-UPDATE Movie SET mID=mID+1;--error11
-INSERT into Movie VAlUES(109,'Titanic',1997,'JC');--error12
-INSERT INTO Reviewer VALUES (201, 'Ted Codd');--error13
-UPDATE Rating set rID=205,mID=104;--error14
-INSERT INTO Reviewer VALUES(209,NULL);--error15
-UPDATE Rating set stars=NULL where RID=208;--error16
-UPDATE Movie set year=year-40;--error17
-UPDATE Rating SET stars=stars+1;--error18
-INSERT INTO Rating VALUES(201,101,1,'1999-01-01');--error19
---error20 and error 21 are related with 10th constraint
-INSERT INTO Movie VAlues(109,'Titanic',2001, NULL);--done22
-UPDATE Rating SET mID=109;--done23
---done24 is related with 10th constraint
-UPDATE Rating set stars=stars-1;--done25
+UPDATE Movie SET mID=mID+1;
+INSERT into Movie VAlUES(109,'Titanic',1997,'JC');
+INSERT INTO Reviewer VALUES (201, 'Ted Codd');
+UPDATE Rating set rID=205,mID=104;
+INSERT INTO Reviewer VALUES(209,NULL);
+UPDATE Rating set stars=NULL where RID=208;
+UPDATE Movie set year=year-40;
+UPDATE Rating SET stars=stars+1;
+INSERT INTO Rating VALUES(201,101,1,'1999-01-01');
+INSERT INTO Movie VAlues(109,'Titanic',2001, NULL);
+UPDATE Rating SET mID=109;
+UPDATE Rating set stars=stars-1;
 ALTER TABLE Rating
-    ADD FOREIGN KEY(rID) REFERENCES Reviewer(rID) ON UPDATE CASCADE ON DELETE SET NULL;--26
+    ADD FOREIGN KEY(rID) REFERENCES Reviewer(rID) ON UPDATE CASCADE ON DELETE SET NULL;
 ALTER TABLE Rating
-    ADD FOREIGN KEY(mID) REFERENCES Movie(mID)ON DELETE CASCADE ;--26
-INSERT INTO Rating VALUES(209,109,3,'2001-01-01');--error27
-UPDATE RATING set rID=209 where rid=208;--error28
-UPDATE Rating set mID=mID+1;--error29
-UPDATE Movie SET mId=109 WHERE mID=108;--error30
-UPDATE Movie SET mID=110 WHERE mID=105;--done31
-UPDATE Reviewer set rId=rId+10;--done32
-DELETE FROM Reviewer where rid>215;--done33
-DELETE FROM Movie where mID<105;--done34
-SELECT sum(rID) FROM Rating WHERE rID is not nUll;--check35
-SELECT count(*) From rating WHERE rID IS NULL;--check35
+    ADD FOREIGN KEY(mID) REFERENCES Movie(mID)ON DELETE CASCADE ;
+INSERT INTO Rating VALUES(209,109,3,'2001-01-01');
+UPDATE RATING set rID=209 where rid=208;
+UPDATE Rating set mID=mID+1;
+UPDATE Movie SET mId=109 WHERE mID=108;
+UPDATE Movie SET mID=110 WHERE mID=105;
+UPDATE Reviewer set rId=rId+10;
+DELETE FROM Reviewer where rid>215;
+DELETE FROM Movie where mID<105;
+SELECT sum(rID) FROM Rating WHERE rID is not NUll;
+SELECT count(*) From rating WHERE rID IS NULL;
 SELECT * from Rating;
 
 /* Populate the tables with our data */
