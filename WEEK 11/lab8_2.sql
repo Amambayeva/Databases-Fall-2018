@@ -19,11 +19,6 @@ CREATE TABLE orders(
   customer_id INTEGER REFERENCES customers(customer_id),
   salesman_id INTEGER REFERENCES salesman(salesman_id)
 );
-INSERT INTO customers VALUES(2001,'HI','London',100,5001);
-INSERT INTO customers VALUES(3001,'d','f',134,5002);
-INSERT INTO salesman VALUES(5001,'James Hong','New York',0.15),
-                           (5002,'Nail Knite','Paris',0.13);
-INSERT INTO orders VALUES (1,120,'2012-10-10',2001,5001);
 --3
 CREATE ROLE junior_dev LOGIN;
 --4
